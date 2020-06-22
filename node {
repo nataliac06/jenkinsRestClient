@@ -1,0 +1,48 @@
+node {
+
+  pipeline {
+     agent any
+
+     tools {
+        // Install the Maven version configured as "M3" and add it to the path.
+        maven "M3"
+     }
+
+     stages {
+        stage('Read from kuali') {
+           steps {
+                  echo 'Testing..'
+          }
+
+
+           post {
+              success {
+                  emailext body: 'SUCCESS', subject: 'Test Email:Build Success ', to: 'nataliac@email.arizona.edu'
+              }
+              fail {
+                 emailext body: 'FAIL', subject: 'Test Email:build Failure ', to: 'nataliac@email.arizona.edu'
+              }
+           }
+        }
+        
+        stage('Process data') {
+           steps {
+                  echo 'Processing..'
+          }
+
+
+           post {
+              success {
+                  emailext body: 'SUCCESS', subject: 'Test Email:Build Success ', to: 'nataliac@email.arizona.edu'
+              }
+              fail {
+                 emailext body: 'FAIL', subject: 'Test Email:build Failure ', to: 'nataliac@email.arizona.edu'
+              }
+           }
+        }
+        
+     }// end stages
+     
+  }//end pipeline
+
+}//end node
